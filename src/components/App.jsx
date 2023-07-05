@@ -1,6 +1,136 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
+import { api } from './api/Api';
+import { nanoid } from 'nanoid';
 
 export const App = () => {
+  const [woj, setWoj] = useState([]);
+  const [pow, setPow] = useState('');
+  const [gmina, setGmina] = useState('');
+  const [city, setCity] = useState('');
+  const [ul, setUl] = useState('');
+  const [kod, setKod] = useState('');
+  const [nr, setNr] = useState('');
+  const [values, setValues] = useState({
+    name: '',
+    lastname: '',
+    email: '',
+    woj: '',
+    pow: '',
+    gmina: '',
+    city: '',
+    ul: '',
+  });
+  const [user, setUser] = useState([]);
+  const [valueWoj, setValueWoj] = useState('');
+  const [valuePow, setValuePow] = useState('');
+  const [valueGmina, setValueGmina] = useState('');
+  const [valueCity, setValueCity] = useState('');
+  const [valueUl, setValueUl] = useState('');
+  const [valueKod, setValueKod] = useState('');
+  const [valueNr, setValueNr] = useState('');
+
+  const getWoj = async () => {
+    try {
+      const voivodeshipList = await api.fetchWoj();
+      console.log(voivodeshipList);
+      setWoj(voivodeshipList);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    try {
+      const json = localStorage.getItem('user');
+      const user = JSON.parse(json);
+
+      if (user) {
+        setUser(user);
+      }
+    } catch (error) {}
+  }, []);
+
+  const handleChange = e => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  /* useEffects */
+
+  useEffect(() => {
+    getWoj();
+  }, []);
+
+  useEffect(() => {
+    if (valueWoj !== '') {
+      api.fetchPow(valueWoj).then(data => setPow(data));
+    }
+  }, [valueWoj]);
+
+  useEffect(() => {
+    if (valueWoj && valuePow !== '') {
+      api.fetchGmina(valueWoj, valuePow).then(data => setGmina(data));
+    }
+  }, [valueWoj, valuePow]);
+
+  useEffect(() => {
+    if (valueWoj && valuePow && valueGmina !== '') {
+      api.fetchCity(valueWoj, valuePow, valueGmina).then(data => setCity(data));
+    }
+  }, [valueWoj, valuePow, valueGmina]);
+
+  useEffect(() => {
+    if (valueWoj && valuePow && valueGmina && valueCity !== '') {
+      api
+        .fetchUl(valueWoj, valuePow, valueGmina, valueCity)
+        .then(data => setUl(data));
+    }
+  }, [valueWoj, valuePow, valueGmina, valueCity]);
+
+  useEffect(() => {
+    if (valueWoj && valuePow && valueGmina && valueCity && valueUl !== '') {
+      api
+        .fetchPostCode(valueWoj, valuePow, valueGmina, valueCity, valueUl)
+        .then(data => setKod(data));
+    }
+  }, [valueWoj, valuePow, valueGmina, valueCity, valueUl]);
+
+  useEffect(() => {
+    if (valueWoj && valuePow && valueGmina && valueCity && valueUl !== '') {
+      api
+        .fetchNr(valueWoj, valuePow, valueGmina, valueCity, valueUl)
+        .then(data => setNr(data));
+    }
+  }, [valueWoj, valuePow, valueGmina, valueCity, valueUl]);
+
+  /* handleSelect */
+
+  const handleSelect = evt => {
+    evt.preventDefault();
+    setValueWoj(evt.target.value);
+  };
+  const handleSelectPow = evt => {
+    evt.preventDefault();
+    setValuePow(evt.target.value);
+  };
+  const handleSelectGmina = evt => {
+    evt.preventDefault();
+    setValueGmina(evt.target.value);
+  };
+  const handleSelectCity = evt => {
+    evt.preventDefault();
+    setValueCity(evt.target.value);
+  };
+  const handleSelectUl = evt => {
+    evt.preventDefault();
+    setValueUl(evt.target.value);
+  };
+  const handleSelectKod = evt => {
+    evt.preventDefault();
+    setValueKod(evt.target.value.toString());
+  };
+  const handleSelectNr = evt => {
+    evt.preventDefault();
+    setValueNr(evt.target.value.toString());
+  };
   return (
     <div>
       <form>
@@ -12,6 +142,7 @@ export const App = () => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           placeholder="Name"
+          onChange={handleChange}
         />
 
         <label> Nazwisko: </label>
@@ -22,6 +153,7 @@ export const App = () => {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           placeholder="Nazwisko"
+          onChange={handleChange}
         />
         <label>email: </label>
         <input
@@ -31,10 +163,64 @@ export const App = () => {
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           placeholder="email"
+          onChange={handleChange}
         />
-        <select></select>
+        <select name="Wojewodztwo" value={valueWoj} onChange={handleSelect}>
+          <option value="">--Please choose an option--</option>
+          {woj.map(woj => (
+            <option value={woj.value}>{woj.value}</option>
+          ))}
+        </select>
+        {pow.length > 0 && (
+          <select name="Powiat" value={valuePow} onChange={handleSelectPow}>
+            <option value="">--Please choose an option--</option>
+            {pow.map(pow => (
+              <option value={pow.value}>{pow.value}</option>
+            ))}
+          </select>
+        )}
+        {gmina.length > 0 && (
+          <select name="Gmina" value={valueGmina} onChange={handleSelectGmina}>
+            <option value="">--Please choose an option--</option>
+            {gmina.map(gmina => (
+              <option value={gmina.value}>{gmina.value}</option>
+            ))}
+          </select>
+        )}
+        {city.length > 0 && (
+          <select name="City" value={valueCity} onChange={handleSelectCity}>
+            <option value="">--Please choose an option--</option>
+            {city.map(city => (
+              <option value={city.value}>{city.value}</option>
+            ))}
+          </select>
+        )}
+        {ul.length > 0 && (
+          <select name="Ul" value={valueUl} onChange={handleSelectUl}>
+            <option value="">--Please choose an option--</option>
+            {ul.map(ul => (
+              <option value={ul.value}>{ul.value}</option>
+            ))}
+          </select>
+        )}
+        {kod.length > 0 && (
+          <select name="Kod" value={valueKod} onChange={handleSelectKod}>
+            <option value="">--Please choose an option--</option>
+            {kod.map(kod => (
+              <option value={kod.value}>{kod.value}</option>
+            ))}
+          </select>
+        )}
+        {nr.length > 0 && (
+          <select name="nr" value={valueNr} onChange={handleSelectNr}>
+            <option value="">--Please choose an option--</option>
+            {nr.map(nr => (
+              <option value={nr.value}>{nr.value}</option>
+            ))}
+          </select>
+        )}
         <div>
-          <button type="submit">Add contact</button>
+          <button type="submit">Register</button>
         </div>
       </form>
     </div>
