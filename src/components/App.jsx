@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { api } from './api/Api';
 import { nanoid } from 'nanoid';
-import { ContactList } from './ContactList/ContactList';
 
 export const App = () => {
   const [woj, setWoj] = useState([]);
@@ -242,9 +241,7 @@ export const App = () => {
           <button type="submit">Register</button>
         </div>
       </form>
-      <div>
-        <ContactList user={user}></ContactList>
-      </div>
+      <div></div>
     </div>
   );
 };
