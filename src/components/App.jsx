@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { api } from './api/Api';
 import { nanoid } from 'nanoid';
+import { ContactList } from './ContactList/ContactList';
 
 export const App = () => {
   const [woj, setWoj] = useState([]);
@@ -11,16 +12,9 @@ export const App = () => {
   const [ul, setUl] = useState('');
   const [kod, setKod] = useState('');
   const [nr, setNr] = useState('');
-  const [values, setValues] = useState({
-    name: '',
-    lastname: '',
-    email: '',
-    woj: '',
-    pow: '',
-    gmina: '',
-    city: '',
-    ul: '',
-  });
+  const [name, setName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [user, setUser] = useState([]);
   const [valueWoj, setValueWoj] = useState('');
   const [valuePow, setValuePow] = useState('');
@@ -38,22 +32,44 @@ export const App = () => {
     } catch (error) {}
   };
 
-  useEffect(() => {
-    try {
-      const json = localStorage.getItem('user');
-      const user = JSON.parse(json);
+  const handleChangeName = e => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
 
-      if (user) {
-        setUser(user);
-      }
-    } catch (error) {}
-  }, []);
+  const handleChangeLastName = e => {
+    e.preventDefault();
+    setLastName(e.target.value);
+  };
 
-  const handleChange = e => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+  const handleChangeEmail = e => {
+    e.preventDefault();
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    const newUser = {
+      id: nanoid(),
+      name: name,
+      lastname: lastname,
+      email: email,
+      woj: valueWoj,
+      pow: valuePow,
+      gmina: valueGmina,
+      city: valueCity,
+      ul: valueUl,
+      kod: valueKod,
+      nr: valueNr,
+    };
+    setUser([...user, newUser]);
   };
 
   /* useEffects */
+  useEffect(() => {
+    const json = JSON.stringify(user);
+    localStorage.setItem('user', json);
+  }, [user]);
 
   useEffect(() => {
     getWoj();
@@ -133,7 +149,7 @@ export const App = () => {
   };
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label> Name: </label>
         <input
           type="text"
@@ -142,28 +158,31 @@ export const App = () => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
           placeholder="Name"
-          onChange={handleChange}
+          onChange={handleChangeName}
+          value={name}
         />
 
         <label> Nazwisko: </label>
         <input
-          type="tel"
+          type="text"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           placeholder="Nazwisko"
-          onChange={handleChange}
+          onChange={handleChangeLastName}
+          value={lastname}
         />
         <label>email: </label>
         <input
-          type="tel"
-          name="number"
+          type="email"
+          name="email"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
           placeholder="email"
-          onChange={handleChange}
+          onChange={handleChangeEmail}
+          value={email}
         />
         <select name="Wojewodztwo" value={valueWoj} onChange={handleSelect}>
           <option value="">--Please choose an option--</option>
@@ -223,6 +242,9 @@ export const App = () => {
           <button type="submit">Register</button>
         </div>
       </form>
+      <div>
+        <ContactList user={user}></ContactList>
+      </div>
     </div>
   );
 };

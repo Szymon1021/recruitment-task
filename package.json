@@ -9,8 +9,11 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
     "nanoid": "^4.0.2",
+    "ol": "^7.4.0",
+    "osm": "^1.0.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-leaflet": "^4.2.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.3"
   },

@@ -1,0 +1,10 @@
+.list {
+    list-style-type: none;
+    font-size: 27px;
+}
+
+.contactlist {
+    display: flex;
+    margin-top: 5px;
+    gap: 10px;
+}
