@@ -1,6 +1,5 @@
 import { nanoid } from 'nanoid';
 import styles from './ContactList.module.css';
-import StaticMap from 'components/map/StaticMap';
 
 export const ContactList = props => {
   const { user } = props;
@@ -14,8 +13,6 @@ export const ContactList = props => {
   return (
     <div>
       <ul className={styles.list}> {valuesList}</ul>
-
-      <StaticMap></StaticMap>
     </div>
   );
 };
