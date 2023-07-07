@@ -22,7 +22,7 @@ export const App = () => {
   const [valueUl, setValueUl] = useState('');
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
-
+  const [street, setStreet] = useState('');
   const getWoj = async () => {
     try {
       const voivodeshipList = await api.fetchWoj();
@@ -94,9 +94,9 @@ export const App = () => {
 
   useEffect(() => {
     if (valueWoj && valuePow && valueGmina && valueCity !== '') {
-      api
-        .fetchUl(valueWoj, valuePow, valueGmina, valueCity)
-        .then(data => setUl(data));
+      api.fetchUl(valueWoj, valuePow, valueGmina, valueCity).then(data => {
+        setUl(data);
+      });
     }
   }, [valueWoj, valuePow, valueGmina, valueCity]);
 
@@ -105,6 +105,7 @@ export const App = () => {
       api
         .fetchPostCode(valueWoj, valuePow, valueGmina, valueCity, valueUl)
         .then(data => setKod(data));
+      setStreet(valueUl.split('').slice(1).join(' ').toLocaleLowerCase());
     }
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl]);
 
@@ -137,6 +138,7 @@ export const App = () => {
   const handleSelectUl = evt => {
     evt.preventDefault();
     setValueUl(evt.target.value);
+    setStreet(evt.target.value);
   };
   const handleSelectKod = evt => {
     evt.preventDefault();

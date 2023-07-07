@@ -92,6 +92,25 @@ const fetchNr = async (valueWoj, valuePow, valueGmina, valueCity, valueUl) => {
   console.log(response.data);
   return response.data;
 };
+const fetchAdress = async (valueNr, valueKod, valueCity, street) => {
+  console.log(street);
+  const response = await axios.post(
+    'https://capap.gugik.gov.pl//api/fts/gc/pkt',
+    {
+      reqs: [
+        {
+          pkt_numer: `${valueNr}`,
+          pkt_kodPocztowy: `${valueKod}`,
+          ul_pelna: `${street}`,
+          miejsc_nazwa: `${valueCity}`,
+        },
+      ],
+      useExtServiceIfNotFound: true,
+    }
+  );
+  console.log(response.data[0].others.geometry.coordinates);
+  return response.data[0].others.geometry.coordinates;
+};
 
 export const api = {
   fetchWoj,
@@ -101,4 +120,5 @@ export const api = {
   fetchUl,
   fetchPostCode,
   fetchNr,
+  fetchAdress,
 };
