@@ -22,7 +22,7 @@ export const App = () => {
   const [valueUl, setValueUl] = useState('');
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
-  const [street, setStreet] = useState('');
+
   const getWoj = async () => {
     try {
       const voivodeshipList = await api.fetchWoj();
@@ -61,7 +61,7 @@ export const App = () => {
       kod: valueKod,
       nr: valueNr,
     };
-    setUser([...user, newUser]);
+    setUser([...user, ...newUser]);
   };
 
   /* useEffects */
@@ -105,17 +105,23 @@ export const App = () => {
       api
         .fetchPostCode(valueWoj, valuePow, valueGmina, valueCity, valueUl)
         .then(data => setKod(data));
-      setStreet(valueUl.split('').slice(1).join(' ').toLocaleLowerCase());
     }
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl]);
 
   useEffect(() => {
-    if (valueWoj && valuePow && valueGmina && valueCity && valueUl !== '') {
+    if (
+      valueWoj &&
+      valuePow &&
+      valueGmina &&
+      valueCity &&
+      valueUl &&
+      valueKod !== ''
+    ) {
       api
-        .fetchNr(valueWoj, valuePow, valueGmina, valueCity, valueUl)
+        .fetchNr(valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod)
         .then(data => setNr(data));
     }
-  }, [valueWoj, valuePow, valueGmina, valueCity, valueUl]);
+  }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod]);
 
   /* handleSelect */
 
@@ -138,15 +144,14 @@ export const App = () => {
   const handleSelectUl = evt => {
     evt.preventDefault();
     setValueUl(evt.target.value);
-    setStreet(evt.target.value);
   };
   const handleSelectKod = evt => {
     evt.preventDefault();
-    setValueKod(evt.target.value.toString());
+    setValueKod(evt.target.value);
   };
   const handleSelectNr = evt => {
     evt.preventDefault();
-    setValueNr(evt.target.value.toString());
+    setValueNr(evt.target.value);
   };
   return (
     <div>

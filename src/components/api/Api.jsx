@@ -77,7 +77,14 @@ const fetchPostCode = async (
   console.log(response.data);
   return response.data;
 };
-const fetchNr = async (valueWoj, valuePow, valueGmina, valueCity, valueUl) => {
+const fetchNr = async (
+  valueWoj,
+  valuePow,
+  valueGmina,
+  valueCity,
+  valueUl,
+  valueKod
+) => {
   const response = await axios.post(
     'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/nr?cnt=50&o=0&dt=false',
     [
@@ -86,32 +93,32 @@ const fetchNr = async (valueWoj, valuePow, valueGmina, valueCity, valueUl) => {
       { level: 'gmi', v: `${valueGmina}` },
       { level: 'msc', v: `${valueCity}` },
       { level: 'ulc', v: `${valueUl}` },
+      { level: 'kod', v: `${valueKod}` },
       { level: 'nr' },
     ]
   );
   console.log(response.data);
   return response.data;
 };
-const fetchAdress = async (valueNr, valueKod, valueCity, street) => {
-  console.log(street);
-  const response = await axios.post(
-    'https://capap.gugik.gov.pl//api/fts/gc/pkt',
-    {
-      reqs: [
-        {
-          pkt_numer: `${valueNr}`,
-          pkt_kodPocztowy: `${valueKod}`,
-          ul_pelna: `${street}`,
-          miejsc_nazwa: `${valueCity}`,
-        },
-      ],
-      useExtServiceIfNotFound: true,
-    }
-  );
-  console.log(response.data[0].others.geometry.coordinates);
-  return response.data[0].others.geometry.coordinates;
-};
 
+const fetchCoordinate = async user => {
+  const response = await axios.post(
+    'https://capap.gugik.gov.pl/api/fts/hier/pkt/qq',
+    [
+      { level: 'woj', v: `${user.woj}` },
+      { level: 'pow', v: `${user.pow}` },
+      { level: 'gmi', v: `${user.gmina}` },
+      { level: 'msc', v: `${user.city}` },
+      { level: 'ulc', v: `${user.ul}` },
+      { level: 'kod', v: `${user.kod}` },
+      { level: 'nr', v: `${user.nr}` },
+    ]
+  );
+  console.log(user.woj);
+  console.log(response.features.coordinates[1]);
+  return response.data.features[0].geometry.coordinates;
+};
+console.log(fetchCoordinate());
 export const api = {
   fetchWoj,
   fetchPow,
@@ -120,5 +127,5 @@ export const api = {
   fetchUl,
   fetchPostCode,
   fetchNr,
-  fetchAdress,
+  fetchCoordinate,
 };
