@@ -22,6 +22,8 @@ export const App = () => {
   const [valueUl, setValueUl] = useState('');
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
+  const [lat, setLat] = useState('');
+  const [lng, setLng] = useState('');
 
   const getWoj = async () => {
     try {
@@ -60,8 +62,11 @@ export const App = () => {
       ul: valueUl,
       kod: valueKod,
       nr: valueNr,
+      lat: lat,
+      lng: lng,
     };
-    setUser([...user, ...newUser]);
+    console.log(lat);
+    setUser([...user, newUser]);
   };
 
   /* useEffects */
@@ -123,6 +128,32 @@ export const App = () => {
     }
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod]);
 
+  useEffect(() => {
+    if (
+      valueWoj &&
+      valuePow &&
+      valueGmina &&
+      valueCity &&
+      valueUl &&
+      valueKod &&
+      valueNr !== ''
+    ) {
+      api
+        .fetchCoordinate(
+          valueWoj,
+          valuePow,
+          valueGmina,
+          valueCity,
+          valueUl,
+          valueKod,
+          valueNr
+        )
+        .then(data => {
+          setLat(data[0]);
+          setLng(data[1]);
+        });
+    }
+  }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod, valueNr]);
   /* handleSelect */
 
   const handleSelect = evt => {

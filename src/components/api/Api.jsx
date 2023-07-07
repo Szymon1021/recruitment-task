@@ -101,21 +101,29 @@ const fetchNr = async (
   return response.data;
 };
 
-const fetchCoordinate = async user => {
+const fetchCoordinate = async (
+  valueWoj,
+  valuePow,
+  valueGmina,
+  valueCity,
+  valueUl,
+  valueKod,
+  valueNr
+) => {
   const response = await axios.post(
     'https://capap.gugik.gov.pl/api/fts/hier/pkt/qq',
     [
-      { level: 'woj', v: `${user.woj}` },
-      { level: 'pow', v: `${user.pow}` },
-      { level: 'gmi', v: `${user.gmina}` },
-      { level: 'msc', v: `${user.city}` },
-      { level: 'ulc', v: `${user.ul}` },
-      { level: 'kod', v: `${user.kod}` },
-      { level: 'nr', v: `${user.nr}` },
+      { level: 'woj', v: `${valueWoj}` },
+      { level: 'pow', v: `${valuePow}` },
+      { level: 'gmi', v: `${valueGmina}` },
+      { level: 'msc', v: `${valueCity}` },
+      { level: 'ulc', v: `${valueUl}` },
+      { level: 'kod', v: `${valueKod}` },
+      { level: 'nr', v: `${valueNr}` },
     ]
   );
-  console.log(user.woj);
-  console.log(response.features.coordinates[1]);
+
+  console.log(response.data.features[0].geometry.coordinates);
   return response.data.features[0].geometry.coordinates;
 };
 console.log(fetchCoordinate());
