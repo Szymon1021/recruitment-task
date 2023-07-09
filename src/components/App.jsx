@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { api } from './api/Api';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Icon } from 'leaflet';
 import './styles.css';
 import 'leaflet/dist/leaflet.css';
 
@@ -26,13 +27,12 @@ export const App = () => {
   const [valueUl, setValueUl] = useState('');
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
-
   const [latlng, setLatLng] = useState([]);
 
   const getWoj = async () => {
     try {
       const voivodeshipList = await api.fetchWoj();
-      console.log(voivodeshipList);
+
       setWoj(voivodeshipList);
     } catch (error) {}
   };
@@ -52,28 +52,19 @@ export const App = () => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const newUser = {
-      id: nanoid(),
-      name: name,
-      lastname: lastname,
-      email: email,
-      woj: valueWoj,
-      pow: valuePow,
-      gmina: valueGmina,
-      city: valueCity,
-      ul: valueUl,
-      kod: valueKod,
-      nr: valueNr,
-
-      latlng: latlng,
-    };
-
-    setUser([...user, newUser]);
-  };
-
   /* useEffects */
+
+  useEffect(() => {
+    try {
+      const json = localStorage.getItem('user');
+      const user = JSON.parse(json);
+
+      if (user) {
+        setUser(user);
+      }
+    } catch (error) {}
+  }, []);
+
   useEffect(() => {
     const json = JSON.stringify(user);
     localStorage.setItem('user', json);
@@ -153,7 +144,7 @@ export const App = () => {
           valueNr
         )
         .then(data => {
-          setLatLng(data);
+          setLatLng(data.reverse());
         });
     }
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod, valueNr]);
@@ -187,6 +178,33 @@ export const App = () => {
     evt.preventDefault();
     setValueNr(evt.target.value);
   };
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    const newUser = {
+      id: nanoid(),
+      name: name,
+      lastname: lastname,
+      email: email,
+      woj: valueWoj,
+      pow: valuePow,
+      gmina: valueGmina,
+      city: valueCity,
+      ul: valueUl,
+      kod: valueKod,
+      nr: valueNr,
+      latlng: latlng,
+    };
+
+    setUser([...user, newUser]);
+
+    console.log(user);
+  };
+
+  const customIcon = new Icon({
+    iconUrl: require('./map/icon.png'),
+    iconSize: [20, 20],
+  });
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -293,10 +311,18 @@ export const App = () => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {user > 0 &&
-            user.map(user => {
-              return <Marker position={user.latlng} />;
-            })}
+
+          {user === null
+            ? null
+            : user.map(({ latlng, name, lastname, city, id }) => {
+                return (
+                  <Marker key={id} position={latlng} icon={customIcon}>
+                    <Popup>
+                      {name}: {lastname} <br /> {city}
+                    </Popup>
+                  </Marker>
+                );
+              })}
         </MapContainer>
       </div>
     </div>
