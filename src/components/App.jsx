@@ -2,6 +2,10 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { api } from './api/Api';
 import { nanoid } from 'nanoid';
+import { ContactList } from './ContactList/ContactList';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import './styles.css';
+import 'leaflet/dist/leaflet.css';
 
 export const App = () => {
   const [woj, setWoj] = useState([]);
@@ -22,8 +26,8 @@ export const App = () => {
   const [valueUl, setValueUl] = useState('');
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
-  const [lat, setLat] = useState('');
-  const [lng, setLng] = useState('');
+
+  const [latlng, setLatLng] = useState([]);
 
   const getWoj = async () => {
     try {
@@ -62,10 +66,10 @@ export const App = () => {
       ul: valueUl,
       kod: valueKod,
       nr: valueNr,
-      lat: lat,
-      lng: lng,
+
+      latlng: latlng,
     };
-    console.log(lat);
+
     setUser([...user, newUser]);
   };
 
@@ -149,8 +153,7 @@ export const App = () => {
           valueNr
         )
         .then(data => {
-          setLat(data[0]);
-          setLng(data[1]);
+          setLatLng(data);
         });
     }
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod, valueNr]);
@@ -279,7 +282,23 @@ export const App = () => {
           <button type="submit">Register</button>
         </div>
       </form>
-      <div></div>
+      <div>
+        <ContactList user={user} />
+        <MapContainer
+          center={[52.230496539240356, 20.57358750525853]}
+          zoom={5}
+          scrollWheelZoom={true}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {user > 0 &&
+            user.map(user => {
+              return <Marker position={user.latlng} />;
+            })}
+        </MapContainer>
+      </div>
     </div>
   );
 };
