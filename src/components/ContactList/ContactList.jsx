@@ -7,8 +7,7 @@ export const ContactList = props => {
     return (
       <li className={styles.contactlist} key={nanoid()}>
         {input.name}-{input.lastname}: {input.email},{input.woj},{input.pow},
-        {input.gmina}
-        {input.city}
+        {input.gmina},{input.city}
         <button type="button" onClick={() => deleteFunction(input.id)}>
           delete
         </button>
