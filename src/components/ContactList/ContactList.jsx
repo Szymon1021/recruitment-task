@@ -1,17 +1,18 @@
 import styles from './ContactList.module.css';
+import { nanoid } from 'nanoid';
 
 export const ContactList = props => {
-  const { user } = props;
+  const { user, deleteFunction } = props;
   const valuesList = user.map(input => {
     return (
-      <div className={styles.contactlist}>
-        <div className={styles.profile} id={input.id}>
-          <p className={styles.name}>{input.name}</p>
-          <p className={styles.name}>{input.lastname}</p>
-          <p className={styles.location}>{input.woj}</p>
-          <p className={styles.name}>{input.city}</p>
-        </div>
-      </div>
+      <li className={styles.contactlist} key={nanoid()}>
+        {input.name}-{input.lastname}: {input.email},{input.woj},{input.pow},
+        {input.gmina}
+        {input.city}
+        <button type="button" onClick={() => deleteFunction(input.id)}>
+          delete
+        </button>
+      </li>
     );
   });
   return (
