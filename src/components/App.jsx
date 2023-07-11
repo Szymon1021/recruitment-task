@@ -341,7 +341,7 @@ export const App = () => {
         <MapContainer
           center={[52.230496539240356, 20.57358750525853]}
           zoom={5}
-          scrollWheelZoom={true}
+          scrollWheelZoom={false}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
