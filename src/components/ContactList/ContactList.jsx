@@ -21,7 +21,13 @@ export const ContactList = props => {
             <td className={styles.line}>{input.email}</td>
             <td className={styles.line}>{input.city}</td>
             <td className={styles.line}>
-              <button type="button" onClick={() => deleteFunction(input.id)} />
+              <button
+                className={styles.button}
+                type="button"
+                onClick={() => deleteFunction(input.id)}
+              >
+                DELETE{' '}
+              </button>
             </td>
           </tr>
         </tbody>
