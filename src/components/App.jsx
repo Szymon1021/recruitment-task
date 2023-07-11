@@ -354,7 +354,7 @@ export const App = () => {
                 return (
                   <Marker key={id} position={latlng} icon={customIcon}>
                     <Popup>
-                      {name}: {lastname} <br /> {city}
+                      {name} - {lastname} <br /> {city}
                     </Popup>
                   </Marker>
                 );
