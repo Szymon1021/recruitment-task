@@ -1,10 +1,19 @@
-.list {
-    
-    font-size: 15px;
+.table {
+    width: 50%;
+    margin-left: 5%;
+    box-shadow: 0 0 3px 1px #b9b9b9;
 }
 
-.contactlist {
-    display: flex;
-    margin-top: 5px;
-    gap: 10px;
+.line {
+    background-color: rgb(103, 127, 151);
+    color: white;
+    text-align: center;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.button {
+    border: 1px solid;
+    width: 20px;
+    height: 20px;
+    
 }

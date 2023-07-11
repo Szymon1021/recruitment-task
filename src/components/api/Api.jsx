@@ -54,7 +54,11 @@ const fetchUl = async (valueWoj, valuePow, valueGmina, valueCity) => {
     ]
   );
   console.log(response.data);
-  return response.data;
+  if (response.data.value === '') {
+    return `Nie ma w rejestrze takiej ulicy `;
+  } else if (response.data.value !== '') {
+    return response.data;
+  }
 };
 const fetchPostCode = async (
   valueWoj,
@@ -63,19 +67,23 @@ const fetchPostCode = async (
   valueCity,
   valueUl
 ) => {
-  const response = await axios.post(
-    'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/kod?cnt=50&o=0&dt=false',
-    [
-      { level: 'woj', v: `${valueWoj}` },
-      { level: 'pow', v: `${valuePow}` },
-      { level: 'gmi', v: `${valueGmina}` },
-      { level: 'msc', v: `${valueCity}` },
-      { level: 'ulc', v: `${valueUl}` },
-      { level: 'kod' },
-    ]
-  );
-  console.log(response.data);
-  return response.data;
+  if (valueUl !== '') {
+    const response = await axios.post(
+      'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/kod?cnt=50&o=0&dt=false',
+      [
+        { level: 'woj', v: `${valueWoj}` },
+        { level: 'pow', v: `${valuePow}` },
+        { level: 'gmi', v: `${valueGmina}` },
+        { level: 'msc', v: `${valueCity}` },
+        { level: 'ulc', v: `${valueUl}` },
+        { level: 'kod' },
+      ]
+    );
+    console.log(response.data);
+    return response.data;
+  } else if (valueUl === '') {
+    return `nie ma takiej ulicy `;
+  }
 };
 const fetchNr = async (
   valueWoj,
@@ -101,30 +109,24 @@ const fetchNr = async (
   return response.data;
 };
 
-const fetchCoordinate = async (
-  valueWoj,
-  valuePow,
-  valueGmina,
-  valueCity,
-  valueUl,
-  valueKod,
-  valueNr
-) => {
-  const response = await axios.post(
-    'https://capap.gugik.gov.pl/api/fts/hier/pkt/qq',
-    [
-      { level: 'woj', v: `${valueWoj}` },
-      { level: 'pow', v: `${valuePow}` },
-      { level: 'gmi', v: `${valueGmina}` },
-      { level: 'msc', v: `${valueCity}` },
-      { level: 'ulc', v: `${valueUl}` },
-      { level: 'kod', v: `${valueKod}` },
-      { level: 'nr', v: `${valueNr}` },
-    ]
-  );
+const fetchCoordinate = async (valueWoj, valuePow, valueGmina, valueCity) => {
+  if (valueWoj && valuePow && valueGmina && valueCity !== '') {
+    const response = await axios.post(
+      'https://capap.gugik.gov.pl/api/fts/hier/pkt/qq',
+      [
+        { level: 'woj', v: `${valueWoj}` },
+        { level: 'pow', v: `${valuePow}` },
+        { level: 'gmi', v: `${valueGmina}` },
+        { level: 'msc', v: `${valueCity}` },
+        { level: 'ulc', v: '' },
+        { level: 'kod', v: '' },
+        { level: 'nr', v: '' },
+      ]
+    );
 
-  console.log(response.data.features[0].geometry.coordinates);
-  return response.data.features[0].geometry.coordinates;
+    console.log(response.data.features[0].geometry.coordinates);
+    return response.data.features[0].geometry.coordinates;
+  }
 };
 console.log(fetchCoordinate());
 export const api = {
