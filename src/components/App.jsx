@@ -223,6 +223,7 @@ export const App = () => {
       <section
         style={{
           display: 'flex',
+          margin: 10,
         }}
       >
         <div className="box">
@@ -338,7 +339,11 @@ export const App = () => {
         </div>
       </section>
       <div>
-        <MapContainer center={[52.230496539240356, 20.57358750525853]} zoom={5}>
+        <MapContainer
+          center={[52.230496539240356, 20.57358750525853]}
+          zoom={5}
+          scrollWheelZoom={false}
+        >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
