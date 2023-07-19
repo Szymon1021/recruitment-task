@@ -1,20 +1,16 @@
 import React from 'react';
-
+import './styles.css';
 import ContactForm from 'components/ContactForm/ContactForm';
+import Nav from './Nav';
 
 export const App = () => {
   return (
     <div>
-      <section
-        style={{
-          display: 'flex',
-          margin: 10,
-        }}
-      >
-        <div className="box">
-          <ContactForm />
-        </div>
-      </section>
+      <Nav />
+      <hr />
+      <div>
+        <ContactForm />
+      </div>
     </div>
   );
 };

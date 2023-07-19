@@ -1,7 +1,7 @@
 import { MapContainer, Marker, TileLayer, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import styles from './StaticMap.module.css';
+import './StaticMap.css';
 
 /*
 
@@ -12,12 +12,12 @@ export const StaticMap = ({ user }) => {
     iconSize: [10, 10],
   });
   return (
-    <div className={styles.container}>
+    <div id="map">
       <MapContainer
         center={[52.230496539240356, 20.57358750525853]}
         zoom={5}
         scrollWheelZoom={true}
-        className={styles.container}
+        style={{ width: '100%', height: 250 }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -61,3 +61,21 @@
 .box button {
     border: 1px solid
 }
+
+
+nav {
+    padding: 20px;
+}
+
+nav a {
+    display: inline-block;
+    padding: 20px;
+    margin: 10px;
+    text-decoration: none;
+}
+
+nav a.active {
+    background: #888;
+    color: #fff;
+
+}
