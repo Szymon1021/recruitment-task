@@ -28,13 +28,13 @@ export const App = () => {
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
   const [latlng, setLatLng] = useState([]);
-  const [showSuggestions, setShowSugestions] = useState(false);
-  const [showSuggestionsPow, setShowSugestionsPow] = useState(false);
-  const [showSuggestionsGmina, setShowSugestionsGmina] = useState(false);
-  const [showSuggestionsCity, setShowSugestionsCity] = useState(false);
-  const [showSuggestionsUl, setShowSugestionsUl] = useState(false);
-  const [showSuggestionsKod, setShowSugestionsKod] = useState(false);
-  const [showSuggestionsNr, setShowSugestionsNr] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [showSuggestionsPow, setShowSuggestionsPow] = useState(false);
+  const [showSuggestionsGmina, setShowSuggestionsGmina] = useState(false);
+  const [showSuggestionsCity, setShowSuggestionsCity] = useState(false);
+  const [showSuggestionsUl, setShowSuggestionsUl] = useState(false);
+  const [showSuggestionsKod, setShowSuggestionsKod] = useState(false);
+  const [showSuggestionsNr, setShowSuggestionsNr] = useState(false);
 
   const getWoj = async () => {
     try {
@@ -225,35 +225,36 @@ export const App = () => {
     iconUrl: require('./map/icon.png'),
     iconSize: [20, 20],
   });
-  const handleSuggestionWoj = woj => {
+  const handleSuggestionsWoj = woj => {
     setValueWoj(woj.value);
-    setShowSugestions(false);
+    setShowSuggestions(false);
   };
 
-  const handleSuggestionPow = pow => {
+  const handleSuggestionsPow = pow => {
     setValuePow(pow.value);
-    setShowSugestionsPow(false);
+    setShowSuggestionsPow(false);
   };
 
-  const handleSuggestionGmina = gmina => {
-    setValuePow(gmina.value);
-    setShowSugestionsGmina(false);
+  const handleSuggestionsGmina = gmina => {
+    setValueGmina(gmina.value);
+    setShowSuggestionsGmina(false);
   };
-  const handleSuggestionCity = city => {
+  const handleSuggestionsCity = city => {
     setValueCity(city.value);
-    setShowSugestionsCity(false);
+    console.log(valueCity);
+    setShowSuggestionsCity(false);
   };
-  const handleSuggestionUl = ul => {
+  const handleSuggestionsUl = ul => {
     setValueUl(ul.value);
-    setShowSugestionsUl(false);
+    setShowSuggestionsUl(false);
   };
-  const handleSuggestionKod = kod => {
+  const handleSuggestionsKod = kod => {
     setValueKod(kod.value);
-    setShowSugestionsKod(false);
+    setShowSuggestionsKod(false);
   };
-  const handleSuggestionNr = nr => {
+  const handleSuggestionsNr = nr => {
     setValueNr(nr.value);
-    setShowSugestionsNr(false);
+    setShowSuggestionsNr(false);
   };
 
   return (
@@ -313,7 +314,7 @@ export const App = () => {
               value={valueWoj}
               onChange={handleSelect}
               placeholder="Wojewodztwo"
-              onFocus={() => setShowSugestions(true)}
+              onFocus={() => setShowSuggestions(true)}
             />
             {showSuggestions && (
               <ul>
@@ -323,7 +324,7 @@ export const App = () => {
                     .map(woj => {
                       return (
                         <li
-                          onClick={() => handleSuggestionWoj(woj)}
+                          onClick={() => handleSuggestionsWoj(woj)}
                           key={nanoid()}
                         >
                           {woj.value}
@@ -337,7 +338,7 @@ export const App = () => {
                 value={valuePow}
                 onChange={handleSelectPow}
                 placeholder="Powiat"
-                onFocus={() => setShowSugestionsPow(true)}
+                onFocus={() => setShowSuggestionsPow(true)}
               />
             )}
             {showSuggestionsPow && (
@@ -348,7 +349,7 @@ export const App = () => {
                     .map(pow => {
                       return (
                         <li
-                          onClick={() => handleSuggestionPow(pow)}
+                          onClick={() => handleSuggestionsPow(pow)}
                           key={nanoid()}
                         >
                           {pow.value}
@@ -363,7 +364,7 @@ export const App = () => {
                 value={valueGmina}
                 onChange={handleSelectGmina}
                 placeholder="Gmina"
-                onFocus={() => setShowSugestionsGmina(true)}
+                onFocus={() => setShowSuggestionsGmina(true)}
               />
             )}
             {showSuggestionsGmina && (
@@ -375,7 +376,7 @@ export const App = () => {
                   .map(gmina => {
                     return (
                       <li
-                        onClick={() => handleSuggestionGmina(gmina)}
+                        onClick={() => handleSuggestionsGmina(gmina)}
                         key={nanoid()}
                       >
                         {gmina.value}
@@ -389,7 +390,7 @@ export const App = () => {
                 value={valueCity}
                 onChange={handleSelectCity}
                 placeholder="City"
-                onFocus={() => setShowSugestionsCity(true)}
+                onFocus={() => setShowSuggestionsCity(true)}
               />
             )}
             {showSuggestionsCity && (
@@ -399,7 +400,7 @@ export const App = () => {
                   .map(city => {
                     return (
                       <li
-                        onClick={() => handleSuggestionCity(city)}
+                        onClick={() => handleSuggestionsCity(city)}
                         key={nanoid()}
                       >
                         {city.value}
@@ -413,7 +414,7 @@ export const App = () => {
                 value={valueUl}
                 onChange={handleSelectUl}
                 placeholder="Ul"
-                onFocus={() => setShowSugestionsUl(true)}
+                onFocus={() => setShowSuggestionsUl(true)}
               />
             )}
             {showSuggestionsUl && (
@@ -424,7 +425,7 @@ export const App = () => {
                     .map(ul => {
                       return (
                         <li
-                          onClick={() => handleSuggestionUl(ul)}
+                          onClick={() => handleSuggestionsUl(ul)}
                           key={nanoid()}
                         >
                           {ul.value}
@@ -438,7 +439,7 @@ export const App = () => {
                 value={valueKod}
                 onChange={handleSelectKod}
                 placeholder="Kod"
-                onFocus={() => setShowSugestionsKod(true)}
+                onFocus={() => setShowSuggestionsKod(true)}
               />
             )}
             {showSuggestionsKod && (
@@ -446,10 +447,10 @@ export const App = () => {
                 {kod.length > 0 &&
                   kod
                     .filter(kod => kod.value.toLowerCase().includes(valueKod))
-                    .map(valueKod => {
+                    .map(kod => {
                       return (
                         <li
-                          onClick={() => handleSuggestionKod(kod)}
+                          onClick={() => handleSuggestionsKod(kod)}
                           key={nanoid()}
                         >
                           {kod.value}
@@ -462,11 +463,11 @@ export const App = () => {
               <input
                 value={valueNr}
                 onChange={handleSelectNr}
-                placeholder="City"
-                onFocus={() => setShowSugestionsNr(true)}
+                placeholder="Nr"
+                onFocus={() => setShowSuggestionsNr(true)}
               />
             )}
-            {showSuggestionsCity && (
+            {showSuggestionsNr && (
               <ul>
                 {nr.length > 0 &&
                   nr
@@ -474,7 +475,7 @@ export const App = () => {
                     .map(nr => {
                       return (
                         <li
-                          onClick={() => handleSuggestionNr(nr)}
+                          onClick={() => handleSuggestionsNr(nr)}
                           key={nanoid()}
                         >
                           {nr.value}
