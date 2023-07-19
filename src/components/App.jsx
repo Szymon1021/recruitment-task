@@ -10,13 +10,13 @@ import 'leaflet/dist/leaflet.css';
 
 export const App = () => {
   const [woj, setWoj] = useState([]);
-  const [pow, setPow] = useState('');
-  const [gmina, setGmina] = useState('');
-  const [city, setCity] = useState('');
-  const [ul, setUl] = useState('');
-  const [kod, setKod] = useState('');
-  const [nr, setNr] = useState('');
-  const [name, setName] = useState('');
+  const [pow, setPow] = useState([]);
+  const [gmina, setGmina] = useState([]);
+  const [city, setCity] = useState([]);
+  const [ul, setUl] = useState([]);
+  const [kod, setKod] = useState([]);
+  const [nr, setNr] = useState([]);
+  const [name, setName] = useState([]);
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState([]);
@@ -28,14 +28,22 @@ export const App = () => {
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
   const [latlng, setLatLng] = useState([]);
+  const [showSuggestions, setShowSugestions] = useState(false);
+  const [showSuggestionsPow, setShowSugestionsPow] = useState(false);
+  const [showSuggestionsGmina, setShowSugestionsGmina] = useState(false);
+  const [showSuggestionsCity, setShowSugestionsCity] = useState(false);
+  const [showSuggestionsUl, setShowSugestionsUl] = useState(false);
+  const [showSuggestionsKod, setShowSugestionsKod] = useState(false);
+  const [showSuggestionsNr, setShowSugestionsNr] = useState(false);
 
   const getWoj = async () => {
     try {
       const voivodeshipList = await api.fetchWoj();
-
       setWoj(voivodeshipList);
+      console.log(woj.value);
     } catch (error) {}
   };
+  console.log(woj.filter(woj => woj.value.toLowerCase().includes(valueWoj)));
 
   const handleChangeName = e => {
     e.preventDefault();
@@ -217,6 +225,36 @@ export const App = () => {
     iconUrl: require('./map/icon.png'),
     iconSize: [20, 20],
   });
+  const handleSuggestionWoj = woj => {
+    setValueWoj(woj.value);
+    setShowSugestions(false);
+  };
+
+  const handleSuggestionPow = pow => {
+    setValuePow(pow.value);
+    setShowSugestionsPow(false);
+  };
+
+  const handleSuggestionGmina = gmina => {
+    setValuePow(gmina.value);
+    setShowSugestionsGmina(false);
+  };
+  const handleSuggestionCity = city => {
+    setValueCity(city.value);
+    setShowSugestionsCity(false);
+  };
+  const handleSuggestionUl = ul => {
+    setValueUl(ul.value);
+    setShowSugestionsUl(false);
+  };
+  const handleSuggestionKod = kod => {
+    setValueKod(kod.value);
+    setShowSugestionsKod(false);
+  };
+  const handleSuggestionNr = nr => {
+    setValueNr(nr.value);
+    setShowSugestionsNr(false);
+  };
 
   return (
     <div>
@@ -271,63 +309,179 @@ export const App = () => {
               onChange={handleChangeEmail}
               value={email}
             />
-            <select name="Wojewodztwo" value={valueWoj} onChange={handleSelect}>
-              <option value="">Wojewodztwo</option>
-              {woj.map(woj => (
-                <option value={woj.value}>{woj.value}</option>
-              ))}
-            </select>
-            {pow.length > 0 && (
-              <select name="Powiat" value={valuePow} onChange={handleSelectPow}>
-                <option value="">Powiat</option>
-                {pow.map(pow => (
-                  <option value={pow.value}>{pow.value}</option>
-                ))}
-              </select>
+            <input
+              value={valueWoj}
+              onChange={handleSelect}
+              placeholder="Wojewodztwo"
+              onFocus={() => setShowSugestions(true)}
+            />
+            {showSuggestions && (
+              <ul>
+                {woj.length > 0 &&
+                  woj
+                    .filter(woj => woj.value.toLowerCase().includes(valueWoj))
+                    .map(woj => {
+                      return (
+                        <li
+                          onClick={() => handleSuggestionWoj(woj)}
+                          key={nanoid()}
+                        >
+                          {woj.value}
+                        </li>
+                      );
+                    })}
+              </ul>
             )}
+            {pow.length > 0 && (
+              <input
+                value={valuePow}
+                onChange={handleSelectPow}
+                placeholder="Powiat"
+                onFocus={() => setShowSugestionsPow(true)}
+              />
+            )}
+            {showSuggestionsPow && (
+              <ul>
+                {pow.length > 0 &&
+                  pow
+                    .filter(pow => pow.value.toLowerCase().includes(valuePow))
+                    .map(pow => {
+                      return (
+                        <li
+                          onClick={() => handleSuggestionPow(pow)}
+                          key={nanoid()}
+                        >
+                          {pow.value}
+                        </li>
+                      );
+                    })}
+              </ul>
+            )}
+
             {gmina.length > 0 && (
-              <select
-                name="Gmina"
+              <input
                 value={valueGmina}
                 onChange={handleSelectGmina}
-              >
-                <option value="">Gmina</option>
-                {gmina.map(gmina => (
-                  <option value={gmina.value}>{gmina.value}</option>
-                ))}
-              </select>
+                placeholder="Gmina"
+                onFocus={() => setShowSugestionsGmina(true)}
+              />
+            )}
+            {showSuggestionsGmina && (
+              <ul>
+                {gmina
+                  .filter(gmina =>
+                    gmina.value.toLowerCase().includes(valueGmina)
+                  )
+                  .map(gmina => {
+                    return (
+                      <li
+                        onClick={() => handleSuggestionGmina(gmina)}
+                        key={nanoid()}
+                      >
+                        {gmina.value}
+                      </li>
+                    );
+                  })}
+              </ul>
             )}
             {city.length > 0 && (
-              <select name="City" value={valueCity} onChange={handleSelectCity}>
-                <option value="">Miasto</option>
-                {city.map(city => (
-                  <option value={city.value}>{city.value}</option>
-                ))}
-              </select>
+              <input
+                value={valueCity}
+                onChange={handleSelectCity}
+                placeholder="City"
+                onFocus={() => setShowSugestionsCity(true)}
+              />
+            )}
+            {showSuggestionsCity && (
+              <ul>
+                {city
+                  .filter(city => city.value.toLowerCase().includes(valueCity))
+                  .map(city => {
+                    return (
+                      <li
+                        onClick={() => handleSuggestionCity(city)}
+                        key={nanoid()}
+                      >
+                        {city.value}
+                      </li>
+                    );
+                  })}
+              </ul>
             )}
             {ul.length > 0 && (
-              <select name="Ul" value={valueUl} onChange={handleSelectUl}>
-                <option value="">ulica</option>
-                {ul.map(ul => (
-                  <option value={ul.value}>{ul.value}</option>
-                ))}
-              </select>
+              <input
+                value={valueUl}
+                onChange={handleSelectUl}
+                placeholder="Ul"
+                onFocus={() => setShowSugestionsUl(true)}
+              />
+            )}
+            {showSuggestionsUl && (
+              <ul>
+                {ul.length > 0 &&
+                  ul
+                    .filter(ul => ul.value.toLowerCase().includes(valueUl))
+                    .map(ul => {
+                      return (
+                        <li
+                          onClick={() => handleSuggestionUl(ul)}
+                          key={nanoid()}
+                        >
+                          {ul.value}
+                        </li>
+                      );
+                    })}
+              </ul>
             )}
             {kod.length > 0 && (
-              <select name="Kod" value={valueKod} onChange={handleSelectKod}>
-                <option value="">kod pocztowy</option>
-                {kod.map(kod => (
-                  <option value={kod.value}>{kod.value}</option>
-                ))}
-              </select>
+              <input
+                value={valueKod}
+                onChange={handleSelectKod}
+                placeholder="Kod"
+                onFocus={() => setShowSugestionsKod(true)}
+              />
+            )}
+            {showSuggestionsKod && (
+              <ul>
+                {kod.length > 0 &&
+                  kod
+                    .filter(kod => kod.value.toLowerCase().includes(valueKod))
+                    .map(valueKod => {
+                      return (
+                        <li
+                          onClick={() => handleSuggestionKod(kod)}
+                          key={nanoid()}
+                        >
+                          {kod.value}
+                        </li>
+                      );
+                    })}
+              </ul>
             )}
             {nr.length > 0 && (
-              <select name="nr" value={valueNr} onChange={handleSelectNr}>
-                <option value="">nr mieszkania</option>
-                {nr.map(nr => (
-                  <option value={nr.value}>{nr.value}</option>
-                ))}
-              </select>
+              <input
+                value={valueNr}
+                onChange={handleSelectNr}
+                placeholder="City"
+                onFocus={() => setShowSugestionsNr(true)}
+              />
+            )}
+            {showSuggestionsCity && (
+              <ul>
+                {nr.length > 0 &&
+                  nr
+                    .filter(nr => nr.value.toLowerCase().includes(valueNr))
+                    .map(nr => {
+                      return (
+                        <li
+                          onClick={() => handleSuggestionNr(nr)}
+                          key={nanoid()}
+                        >
+                          {nr.value}
+                        </li>
+                      );
+                    })}
+              </ul>
             )}
             <div>
               <button type="submit">Register</button>

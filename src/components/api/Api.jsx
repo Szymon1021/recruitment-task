@@ -31,7 +31,7 @@ const fetchGmina = async (valueWoj, valuePow) => {
 };
 const fetchCity = async (valueWoj, valuePow, valueGmina) => {
   const response = await axios.post(
-    'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/msc?cnt=50&o=0&dt=false',
+    'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/msc?cnt=500&o=0&dt=false',
     [
       { level: 'woj', v: `${valueWoj}` },
       { level: 'pow', v: `${valuePow}` },
@@ -44,7 +44,7 @@ const fetchCity = async (valueWoj, valuePow, valueGmina) => {
 };
 const fetchUl = async (valueWoj, valuePow, valueGmina, valueCity) => {
   const response = await axios.post(
-    'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/ulc?cnt=50&o=0&dt=false',
+    'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/ulc?cnt=5000&o=0&dt=false',
     [
       { level: 'woj', v: `${valueWoj}` },
       { level: 'pow', v: `${valuePow}` },
@@ -69,7 +69,7 @@ const fetchPostCode = async (
 ) => {
   if (valueUl !== '') {
     const response = await axios.post(
-      'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/kod?cnt=50&o=0&dt=false',
+      'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/kod?cnt=500&o=0&dt=false',
       [
         { level: 'woj', v: `${valueWoj}` },
         { level: 'pow', v: `${valuePow}` },
@@ -94,7 +94,7 @@ const fetchNr = async (
   valueKod
 ) => {
   const response = await axios.post(
-    'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/nr?cnt=50&o=0&dt=false',
+    'https://capap.gugik.gov.pl/api/fts/hier/fdict/pkt/nr?cnt=500&o=0&dt=false',
     [
       { level: 'woj', v: `${valueWoj}` },
       { level: 'pow', v: `${valuePow}` },
