@@ -1,0 +1,67 @@
+.contact {
+    display: flex;
+    flex-direction: column;
+    width: 160px;
+    margin-top: 10px;
+}
+
+.box input {
+    background-color: white;
+    color: #000000;
+    padding: 2px;
+    width: 160px;
+    border: none;
+    font-size: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    height: 30px;
+
+}
+
+.box ul {
+    padding: 0;
+    margin-top: 0;
+}
+
+.box li {
+    background-color: white;
+    color: #000000;
+    padding: 2px;
+    width: 160px;
+    border: none;
+    font-size: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    height: 30px;
+    padding-top: 0px;
+}
+
+.box::before {
+    content: "\f13a";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+}
+
+.box:hover::before {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+    padding: 30px;
+}
+
+.box button {
+    border: 1px solid
+}

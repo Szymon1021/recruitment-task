@@ -6,7 +6,7 @@ import styles from './StaticMap.module.css';
 /*
 
 */
-export const StaticMap = user => {
+export const StaticMap = ({ user }) => {
   const customIcon = new Icon({
     iconUrl: require('./icon.png'),
     iconSize: [10, 10],
