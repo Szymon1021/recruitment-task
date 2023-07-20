@@ -1,8 +1,23 @@
-.contact {
+
+.main {
+    text-align: center;
+    justify-content: center;
     display: flex;
-    flex-direction: column;
-    width: 160px;
-    margin-top: 10px;
+    padding: 90px 0 90px 0;
+}
+
+
+
+.box {
+    display: flex;
+    justify-content: center;
+    height: 550px;
+    width: 40%;
+    box-shadow: 11px 12px 13px 12px rgb(207, 207, 207);
+    padding-top: 30px;
+    border-radius: 60px;
+    background-color: white;
+    margin-left: 0px;
 }
 
 .box input {
@@ -20,12 +35,14 @@
 .box ul {
     padding: 0;
     margin-top: 0;
+    margin-bottom: 0;
+    text-align: justify;
 }
 
 .box li {
     background-color: white;
     color: #000000;
-    padding: 2px;
+    padding: 0px;
     width: 160px;
     border: none;
     font-size: 10px;
@@ -35,6 +52,8 @@
     outline: none;
     height: 30px;
     padding-top: 0px;
+    margin-top: 0;
+    text-align: center;
 }
 
 .box::before {
@@ -59,7 +78,7 @@
 }
 
 .box select option {
-    padding: 30px;
+    padding: 0px;
 }
 
 .box button {
