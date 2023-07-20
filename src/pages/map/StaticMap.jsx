@@ -3,6 +3,7 @@ import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './StaticMap.css';
 import { useParams } from 'react-router-dom';
+import React from 'react';
 
 /*
 

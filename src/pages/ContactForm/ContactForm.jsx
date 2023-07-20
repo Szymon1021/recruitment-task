@@ -2,13 +2,10 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { api } from 'components/api/Api';
 import { nanoid } from 'nanoid';
-import { ContactList } from 'components/ContactList/ContactList';
-import { StaticMap } from 'components/map/StaticMap';
+
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 
 import './ContactForm.css';
-import { Box } from '@mui/material';
 
 export default function ContactForm() {
   const [woj, setWoj] = useState([]);
@@ -42,7 +39,6 @@ export default function ContactForm() {
     try {
       const voivodeshipList = await api.fetchWoj();
       setWoj(voivodeshipList);
-      console.log(woj.value);
     } catch (error) {}
   };
   console.log(woj.filter(woj => woj.value.toLowerCase().includes(valueWoj)));
@@ -251,15 +247,21 @@ export default function ContactForm() {
     setShowSuggestionsNr(false);
   };
 
-  const deleteFunction = id => {
-    const newFilteredContacts = user.filter(contact => contact.id !== id);
-    setUser(newFilteredContacts);
+  const handleSuggestionOut = e => {
+    if (e.target === e.currentTarget) {
+      setShowSuggestions(false);
+      setShowSuggestionsPow(false);
+      setShowSuggestionsGmina(false);
+      setShowSuggestionsCity(false);
+      setShowSuggestionsUl(false);
+      setShowSuggestionsKod(false);
+      setShowSuggestionsNr(false);
+    }
   };
-
   return (
     <div>
-      <div className="main">
-        <div className="box">
+      <div className="main" onClick={handleSuggestionOut}>
+        <div className="box" onClick={handleSuggestionOut}>
           <form
             onSubmit={handleSubmit}
             autocomplete="off"
@@ -480,24 +482,11 @@ export default function ContactForm() {
                     })}
               </ul>
             )}
-            <Autocomplete
-              id="woj"
-              getOptionLabel={woj => woj.value}
-              options={woj}
-              renderOption={
-                (woj,
-                props => {
-                  <Box component="li" {...props} key={nanoid()}>
-                    {woj.value}
-                  </Box>;
-                })
-              }
-              renderInput={params => (
-                <TextField {...params} label="Wojewodztwo" />
-              )}
-            />
+
             <div>
-              <button type="submit">Register</button>
+              <button type="submit">
+                <span class="button-content">Register </span>
+              </button>
             </div>
           </form>
         </div>
