@@ -14,9 +14,9 @@ export const App = () => {
       <Suspense fallback={<div>loading...</div>}>
         <Routes>
           <Route path="/" element={<ContactForm />}></Route>
-          <Route path="/Map" element={<StaticMap />}></Route>
+          <Route path="/Map/:user" element={<StaticMap />}></Route>
 
-          <Route path="/ContactList" element={<ContactList />}></Route>
+          <Route path="/ContactList/:user" element={<ContactList />}></Route>
         </Routes>
       </Suspense>
     </div>

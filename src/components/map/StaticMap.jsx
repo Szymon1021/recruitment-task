@@ -2,11 +2,13 @@ import { MapContainer, Marker, TileLayer, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './StaticMap.css';
+import { useParams } from 'react-router-dom';
 
 /*
 
 */
-export const StaticMap = ({ user }) => {
+export const StaticMap = () => {
+  const { user } = useParams();
   const customIcon = new Icon({
     iconUrl: require('./icon.png'),
     iconSize: [10, 10],
@@ -17,7 +19,7 @@ export const StaticMap = ({ user }) => {
         center={[52.230496539240356, 20.57358750525853]}
         zoom={5}
         scrollWheelZoom={true}
-        style={{ width: '100%', height: 250 }}
+        style={{ width: '100%', height: '100%' }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

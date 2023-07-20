@@ -1,8 +1,9 @@
+import { useParams } from 'react-router-dom';
 import styles from './ContactList.module.css';
 import { nanoid } from 'nanoid';
 
-export const ContactList = props => {
-  const { user, deleteFunction } = props;
+export const ContactList = () => {
+  const { user, deleteFunction } = useParams();
   const valuesList = user.map(input => {
     return (
       <li className={styles.contactlist} key={nanoid()}>
