@@ -6,13 +6,13 @@
     display: flex;
     justify-content: center;
     height: 600px;
-    width: 50%;
+    width: 40%;
     box-shadow: 5px 5px 5px 5px rgb(207, 207, 207);
     padding-top: 30px;
     border-radius: 60px;
     background-color: white;
-    margin-left: 0px;
-   
+    margin-left: 365px;
+   margin-top: 20px;
     
 }
 

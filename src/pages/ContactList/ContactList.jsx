@@ -1,10 +1,8 @@
-import { useParams } from 'react-router-dom';
 import styles from './ContactList.module.css';
 import { nanoid } from 'nanoid';
 import React from 'react';
 
-export const ContactList = () => {
-  const { user, deleteFunction } = useParams();
+export const ContactList = ({ user, deleteFunction }) => {
   const valuesList = user.map(input => {
     return (
       <li className={styles.contactlist} key={nanoid()}>
@@ -16,8 +14,10 @@ export const ContactList = () => {
     );
   });
   return (
-    <div>
-      <ul className={styles.list}> {valuesList}</ul>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
+        <ul className={styles.list}> {valuesList}</ul>
+      </div>
     </div>
   );
 };

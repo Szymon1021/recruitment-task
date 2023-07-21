@@ -25,6 +25,7 @@ export default function Form({
   handleSelectNr,
   handleMapButton,
   userMap,
+  handleClButton,
 }) {
   return (
     <div className="box">
@@ -149,13 +150,6 @@ export default function Form({
           </button>
         </div>
       </form>
-      <button
-        style={{ height: 50 }}
-        title="open Map"
-        onClick={() => handleMapButton({ userMap })}
-      >
-        <span class="button-content">Map </span>
-      </button>
     </div>
   );
 }

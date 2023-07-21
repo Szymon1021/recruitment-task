@@ -14,12 +14,16 @@ export const StaticMap = ({ userMap, handleMapButtonClose }) => {
     iconSize: [10, 10],
   });
   return (
-    <div className="overlay" onClick={() => handleMapButtonClose}>
+    <div
+      title="close-map"
+      className="overlay"
+      onClick={() => handleMapButtonClose}
+    >
       <div id="map">
         <MapContainer
           center={[52.230496539240356, 20.57358750525853]}
           zoom={5}
-          scrollWheelZoom={true}
+          scrollWheelZoom={false}
           style={{ width: '100%', height: '100%' }}
         >
           <TileLayer

@@ -6,6 +6,7 @@ import { nanoid } from 'nanoid';
 import './ContactForm.css';
 import { StaticMap } from 'pages/map/StaticMap';
 import Form from 'pages/Form/Form';
+import { ContactList } from 'pages/ContactList/ContactList';
 
 export default function ContactForm() {
   const [woj, setWoj] = useState([]);
@@ -29,6 +30,9 @@ export default function ContactForm() {
   const [latlng, setLatLng] = useState([]);
   const [map, setMap] = useState(false);
   const [userMap, setUserMap] = useState([]);
+  const [cl, setCl] = useState(false);
+
+  console.log(map);
 
   const getWoj = async () => {
     try {
@@ -206,8 +210,11 @@ export default function ContactForm() {
     console.log(user);
   };
 
-  const handleMapButton = user => {
+  const handleMapButton = () => {
     setMap(true);
+  };
+  const handleClButton = user => {
+    setCl(true);
     setUserMap(user);
   };
 
@@ -216,11 +223,21 @@ export default function ContactForm() {
       setMap(false);
     }
   };
+  const handleClButtonClose = () => {
+    setCl(false);
+    console.log(map);
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+  }, []);
 
   const handleKeyPress = event => {
     if (event.key === 'Escape') {
       setMap(false);
+      setCl(false);
       console.log('nie ma modalu ');
+      console.log(map);
     } else {
       console.log('nie działa');
     }
@@ -229,6 +246,22 @@ export default function ContactForm() {
   return (
     <div className="container-contactform">
       <div className="main">
+        <div>
+          <button
+            style={{ height: 50 }}
+            title="open Map"
+            onClick={() => handleMapButton({ userMap })}
+          >
+            <span class="button-content">Map </span>
+          </button>
+          <button
+            style={{ height: 50 }}
+            title="open Cl"
+            onClick={() => handleClButton({ userMap })}
+          >
+            <span class="button-content">ContactList </span>
+          </button>
+        </div>
         <Form
           handleSubmit={handleSubmit}
           handleChangeEmail={handleChangeEmail}
@@ -250,15 +283,23 @@ export default function ContactForm() {
           handleSelectPow={handleSelectPow}
           handleMapButton={handleMapButton}
           userMap={userMap}
+          handleClButton={handleClButton}
         />
       </div>
-      {map ? (
+      {map && (
         <StaticMap
           userMap={user}
           handleKeyPress={handleKeyPress}
           handleMapButtonClose={handleMapButtonClose}
         />
-      ) : null}
+      )}
+      {cl && (
+        <ContactList
+          user={user}
+          handleKeyPress={handleKeyPress}
+          handleClButtonClose={handleClButtonClose}
+        />
+      )}
     </div>
   );
 }
