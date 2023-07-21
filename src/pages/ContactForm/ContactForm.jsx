@@ -221,8 +221,9 @@ export default function ContactForm() {
     if (event.key === 'Escape') {
       setMap(false);
       console.log('nie ma modalu ');
+    } else {
+      console.log('nie działa');
     }
-    console.log('nie działa');
   };
 
   return (
@@ -254,8 +255,8 @@ export default function ContactForm() {
       {map ? (
         <StaticMap
           userMap={user}
-          handleModalButtonClose={handleMapButtonClose}
           handleKeyPress={handleKeyPress}
+          handleMapButtonClose={handleMapButtonClose}
         />
       ) : null}
     </div>
