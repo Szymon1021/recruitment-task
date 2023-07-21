@@ -4,6 +4,8 @@ import { api } from 'components/api/Api';
 import { nanoid } from 'nanoid';
 
 import './ContactForm.css';
+import { StaticMap } from 'pages/map/StaticMap';
+import Form from 'pages/Form/Form';
 
 export default function ContactForm() {
   const [woj, setWoj] = useState([]);
@@ -25,13 +27,8 @@ export default function ContactForm() {
   const [valueKod, setValueKod] = useState('');
   const [valueNr, setValueNr] = useState('');
   const [latlng, setLatLng] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const [showSuggestionsPow, setShowSuggestionsPow] = useState(false);
-  const [showSuggestionsGmina, setShowSuggestionsGmina] = useState(false);
-  const [showSuggestionsCity, setShowSuggestionsCity] = useState(false);
-  const [showSuggestionsUl, setShowSuggestionsUl] = useState(false);
-  const [showSuggestionsKod, setShowSuggestionsKod] = useState(false);
-  const [showSuggestionsNr, setShowSuggestionsNr] = useState(false);
+  const [map, setMap] = useState(false);
+  const [userMap, setUserMap] = useState([]);
 
   const getWoj = async () => {
     try {
@@ -163,36 +160,31 @@ export default function ContactForm() {
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod, valueNr]);
   /* handleSelect */
 
-  const handleSelect = evt => {
-    evt.preventDefault();
-    setValueWoj(evt.target.value);
+  const handleSelect = woj => {
+    setValueWoj(woj);
   };
-  const handleSelectPow = evt => {
-    evt.preventDefault();
-    setValuePow(evt.target.value);
+  console.log(valueWoj);
+  const handleSelectPow = pow => {
+    setValuePow(pow);
   };
-  const handleSelectGmina = evt => {
-    evt.preventDefault();
-    setValueGmina(evt.target.value);
+  const handleSelectGmina = gmina => {
+    setValueGmina(gmina);
   };
-  const handleSelectCity = evt => {
-    evt.preventDefault();
-    setValueCity(evt.target.value);
+  const handleSelectCity = city => {
+    setValueCity(city);
   };
-  const handleSelectUl = evt => {
-    evt.preventDefault();
-    setValueUl(evt.target.value);
+  const handleSelectUl = ul => {
+    setValueUl(ul);
   };
-  const handleSelectKod = evt => {
-    evt.preventDefault();
-    setValueKod(evt.target.value);
+  const handleSelectKod = kod => {
+    setValueKod(kod);
   };
-  const handleSelectNr = evt => {
-    evt.preventDefault();
-    setValueNr(evt.target.value);
+  const handleSelectNr = nr => {
+    setValueNr(nr);
   };
   const handleSubmit = evt => {
     evt.preventDefault();
+    const form = evt.currentTarget;
     const newUser = {
       id: nanoid(),
       name: name,
@@ -210,285 +202,62 @@ export default function ContactForm() {
 
     setUser([...user, newUser]);
 
+    form.reset();
     console.log(user);
   };
 
-  const handleSuggestionsWoj = woj => {
-    setValueWoj(woj.value);
-    setShowSuggestions(false);
+  const handleMapButton = user => {
+    setMap(true);
+    setUserMap(user);
   };
 
-  const handleSuggestionsPow = pow => {
-    setValuePow(pow.value);
-    setShowSuggestionsPow(false);
-  };
-
-  const handleSuggestionsGmina = gmina => {
-    setValueGmina(gmina.value);
-    setShowSuggestionsGmina(false);
-  };
-  const handleSuggestionsCity = city => {
-    setValueCity(city.value);
-    console.log(valueCity);
-    setShowSuggestionsCity(false);
-  };
-  const handleSuggestionsUl = ul => {
-    setValueUl(ul.value);
-    setShowSuggestionsUl(false);
-  };
-  const handleSuggestionsKod = kod => {
-    setValueKod(kod.value);
-    setShowSuggestionsKod(false);
-  };
-  const handleSuggestionsNr = nr => {
-    setValueNr(nr.value);
-    setShowSuggestionsNr(false);
-  };
-
-  const handleSuggestionOut = e => {
+  const handleMapButtonClose = e => {
     if (e.target === e.currentTarget) {
-      setShowSuggestions(false);
-      setShowSuggestionsPow(false);
-      setShowSuggestionsGmina(false);
-      setShowSuggestionsCity(false);
-      setShowSuggestionsUl(false);
-      setShowSuggestionsKod(false);
-      setShowSuggestionsNr(false);
+      setMap(false);
     }
   };
+
+  const handleKeyPress = event => {
+    if (event.key === 'Escape') {
+      setMap(false);
+      console.log('nie ma modalu ');
+    }
+    console.log('nie działa');
+  };
+
   return (
-    <div>
-      <div className="main" onClick={handleSuggestionOut}>
-        <div className="box" onClick={handleSuggestionOut}>
-          <form
-            onSubmit={handleSubmit}
-            autocomplete="off"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              marginTop: 10,
-              width: 160,
-              gap: 10,
-            }}
-          >
-            <label> Name: </label>
-            <input
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              placeholder="Name"
-              onChange={handleChangeName}
-              value={name}
-            />
-
-            <label>LastName: </label>
-            <input
-              type="text"
-              name="LastName"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              placeholder="LastName"
-              onChange={handleChangeLastName}
-              value={lastname}
-            />
-            <label>email: </label>
-            <input
-              type="email"
-              name="email"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              placeholder="email"
-              onChange={handleChangeEmail}
-              value={email}
-            />
-            <label>Adres: </label>
-            <input
-              value={valueWoj}
-              onChange={handleSelect}
-              placeholder="Wojewodztwo"
-              onFocus={() => setShowSuggestions(true)}
-            />
-            {showSuggestions && (
-              <ul>
-                {woj.length > 0 &&
-                  woj
-                    .filter(woj => woj.value.toLowerCase().includes(valueWoj))
-                    .map(woj => {
-                      return (
-                        <li
-                          onClick={() => handleSuggestionsWoj(woj)}
-                          key={nanoid()}
-                        >
-                          {woj.value}
-                        </li>
-                      );
-                    })}
-              </ul>
-            )}
-            {pow.length > 0 && (
-              <input
-                value={valuePow}
-                onChange={handleSelectPow}
-                placeholder="Powiat"
-                onFocus={() => setShowSuggestionsPow(true)}
-              />
-            )}
-            {showSuggestionsPow && (
-              <ul>
-                {pow.length > 0 &&
-                  pow
-                    .filter(pow => pow.value.toLowerCase().includes(valuePow))
-                    .map(pow => {
-                      return (
-                        <li
-                          onClick={() => handleSuggestionsPow(pow)}
-                          key={nanoid()}
-                        >
-                          {pow.value}
-                        </li>
-                      );
-                    })}
-              </ul>
-            )}
-
-            {gmina.length > 0 && (
-              <input
-                value={valueGmina}
-                onChange={handleSelectGmina}
-                placeholder="Gmina"
-                onFocus={() => setShowSuggestionsGmina(true)}
-              />
-            )}
-            {showSuggestionsGmina && (
-              <ul>
-                {gmina
-                  .filter(gmina =>
-                    gmina.value.toLowerCase().includes(valueGmina)
-                  )
-                  .map(gmina => {
-                    return (
-                      <li
-                        onClick={() => handleSuggestionsGmina(gmina)}
-                        key={nanoid()}
-                      >
-                        {gmina.value}
-                      </li>
-                    );
-                  })}
-              </ul>
-            )}
-            {city.length > 0 && (
-              <input
-                value={valueCity}
-                onChange={handleSelectCity}
-                placeholder="City"
-                onFocus={() => setShowSuggestionsCity(true)}
-              />
-            )}
-            {showSuggestionsCity && (
-              <ul>
-                {city
-                  .filter(city => city.value.toLowerCase().includes(valueCity))
-                  .map(city => {
-                    return (
-                      <li
-                        onClick={() => handleSuggestionsCity(city)}
-                        key={nanoid()}
-                      >
-                        {city.value}
-                      </li>
-                    );
-                  })}
-              </ul>
-            )}
-            {ul.length > 0 && (
-              <input
-                value={valueUl}
-                onChange={handleSelectUl}
-                placeholder="Ul"
-                onFocus={() => setShowSuggestionsUl(true)}
-              />
-            )}
-            {showSuggestionsUl && (
-              <ul>
-                {ul.length > 0 &&
-                  ul
-                    .filter(ul => ul.value.toLowerCase().includes(valueUl))
-                    .map(ul => {
-                      return (
-                        <li
-                          onClick={() => handleSuggestionsUl(ul)}
-                          key={nanoid()}
-                        >
-                          {ul.value}
-                        </li>
-                      );
-                    })}
-              </ul>
-            )}
-            {kod.length > 0 && (
-              <input
-                value={valueKod}
-                onChange={handleSelectKod}
-                placeholder="Kod"
-                onFocus={() => setShowSuggestionsKod(true)}
-              />
-            )}
-            {showSuggestionsKod && (
-              <ul>
-                {kod.length > 0 &&
-                  kod
-                    .filter(kod => kod.value.toLowerCase().includes(valueKod))
-                    .map(kod => {
-                      return (
-                        <li
-                          onClick={() => handleSuggestionsKod(kod)}
-                          key={nanoid()}
-                        >
-                          {kod.value}
-                        </li>
-                      );
-                    })}
-              </ul>
-            )}
-            {nr.length > 0 && (
-              <input
-                value={valueNr}
-                onChange={handleSelectNr}
-                placeholder="Nr"
-                onFocus={() => setShowSuggestionsNr(true)}
-              />
-            )}
-            {showSuggestionsNr && (
-              <ul>
-                {nr.length > 0 &&
-                  nr
-                    .filter(nr => nr.value.toLowerCase().includes(valueNr))
-                    .map(nr => {
-                      return (
-                        <li
-                          onClick={() => handleSuggestionsNr(nr)}
-                          key={nanoid()}
-                        >
-                          {nr.value}
-                        </li>
-                      );
-                    })}
-              </ul>
-            )}
-
-            <div>
-              <button type="submit">
-                <span class="button-content">Register </span>
-              </button>
-            </div>
-          </form>
-        </div>
+    <div className="container-contactform">
+      <div className="main">
+        <Form
+          handleSubmit={handleSubmit}
+          handleChangeEmail={handleChangeEmail}
+          handleChangeName={handleChangeName}
+          handleChangeLastName={handleChangeLastName}
+          handleSelect={handleSelect}
+          handleSelectCity={handleSelectCity}
+          woj={woj}
+          pow={pow}
+          city={city}
+          gmina={gmina}
+          ul={ul}
+          kod={kod}
+          nr={nr}
+          handleSelectGmina={handleSelectGmina}
+          handleSelectKod={handleSelectKod}
+          handleSelectNr={handleSelectNr}
+          handleSelectUl={handleSelectUl}
+          handleSelectPow={handleSelectPow}
+          handleMapButton={handleMapButton}
+          userMap={userMap}
+        />
       </div>
+      {map ? (
+        <StaticMap
+          userMap={user}
+          handleModalButtonClose={handleMapButtonClose}
+          handleKeyPress={handleKeyPress}
+        />
+      ) : null}
     </div>
   );
 }

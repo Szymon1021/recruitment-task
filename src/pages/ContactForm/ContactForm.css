@@ -1,4 +1,10 @@
-
+.container-contactform {
+    background: rgb(2, 0, 36);
+        background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(18, 208, 240, 1) 28%, rgba(246, 2, 208, 1) 100%);
+    height: 100%;
+    width: 100%;
+    margin-top: 0;
+}
 .main {
     text-align: center;
     justify-content: center;
@@ -8,126 +14,4 @@
 
 
 
-.box {
-    display: flex;
-    justify-content: center;
-    height: 550px;
-    width: 40%;
-    box-shadow: 11px 12px 13px 12px rgb(207, 207, 207);
-    padding-top: 30px;
-    border-radius: 60px;
-    background-color: white;
-    margin-left: 0px;
-}
 
-.box input {
-    background-color: white;
-    color: #000000;
-    padding: 2px;
-    width: 160px;
-    border: none;
-    font-size: 10px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-    height: 30px;
-
-}
-
-.box ul {
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    text-align: justify;
-    position: relative;
-    display: inline-block;
-}
-
-.box li {
-    background-color: white;
-    color: #000000;
-    padding: 0px;
-    width: 160px;
-    border: none;
-    font-size: 10px;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-    -webkit-appearance: button;
-    appearance: button;
-    outline: none;
-    height: 30px;
-    padding-top: 0px;
-    margin-top: 0;
-    text-align: center;
-    z-index: 100;
-    
-
-}
-
-.box::before {
-    content: "\f13a";
-    font-family: FontAwesome;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20%;
-    height: 100%;
-    text-align: center;
-    font-size: 28px;
-    line-height: 45px;
-    color: rgba(255, 255, 255, 0.5);
-    background-color: rgba(255, 255, 255, 0.1);
-    pointer-events: none;
-}
-
-.box:hover::before {
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.box select option {
-    padding: 0px;
-}
-
-
-.box button {
-    position: relative;
-    overflow: hidden;
-    height: 3rem;
-    padding: 0 2rem;
-    border-radius: 1.5rem;
-    background: #3d3a4e;
-    background-size: 400%;
-    color: #fff;
-    border: none;
-    z-index: 10;
-}
-
-.box button:hover::before {
-    -webkit-transform: scaleX(1);
-    -ms-transform: scaleX(1);
-    transform: scaleX(1);
-}
-
-.box .button-content {
-    position: relative;
-    z-index: 1;
-}
-
-.box button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    -webkit-transform: scaleX(0);
-    -ms-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transform-origin: 0 50%;
-    -ms-transform-origin: 0 50%;
-    transform-origin: 0 50%;
-    width: 100%;
-    height: inherit;
-    border-radius: inherit;
-    background: linear-gradient(82.3deg,
-            rgba(150, 93, 233, 1) 10.8%,
-            rgba(99, 88, 238, 1) 94.3%);
-    -webkit-transition: all 0.475s;
-    transition: all 0.475s;
-}

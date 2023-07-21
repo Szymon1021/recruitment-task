@@ -1,0 +1,89 @@
+
+
+
+
+.box {
+    display: flex;
+    justify-content: center;
+    height: 600px;
+    width: 50%;
+    box-shadow: 5px 5px 5px 5px rgb(207, 207, 207);
+    padding-top: 30px;
+    border-radius: 60px;
+    background-color: white;
+    margin-left: 0px;
+    flex-direction: column;
+    
+}
+
+.box input {
+
+    color: #000000;
+    padding: 2px;
+    width: 160px;
+    border: none;
+    font-size: 15px;
+    box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.2);
+    height: 40px;
+    text-align: center;
+
+    text-decoration-color: #fff;
+
+
+}
+
+
+
+
+
+.box button {
+    position: relative;
+    overflow: hidden;
+    height: 50px;
+    padding: 0 2rem;
+    border-radius: 1.5rem;
+    background: #3d3a4e;
+    background-size: 400%;
+    color: #fff;
+    border: none;
+    z-index: 10;
+}
+
+.box button:hover::before {
+    -webkit-transform: scaleX(1);
+    -ms-transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+.box .button-content {
+    position: relative;
+    z-index: 1;
+}
+
+.box button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    -ms-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    width: 100%;
+    height: inherit;
+    border-radius: inherit;
+    background: linear-gradient(82.3deg,
+            rgba(150, 93, 233, 1) 10.8%,
+            rgba(99, 88, 238, 1) 94.3%);
+    -webkit-transition: all 0.475s;
+    transition: all 0.475s;
+}
+
+:where(.css-dev-only-do-not-override-1sn0ohr).ant-select-single .ant-select-selector .ant-select-selection-search {
+    inset-inline-start: 0px;
+    inset-inline-end: 0px;
+}
+
+
