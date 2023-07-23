@@ -20,6 +20,9 @@ export const StaticMap = ({ userMap, handleMapButtonClose }) => {
       onClick={() => handleMapButtonClose}
     >
       <div id="map">
+        <button className="button-close" onClick={handleMapButtonClose}>
+          CLOSE
+        </button>
         <MapContainer
           center={[52.230496539240356, 20.57358750525853]}
           zoom={5}

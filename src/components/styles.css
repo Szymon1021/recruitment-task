@@ -24,3 +24,9 @@ border: 5px solid black;
 margin-top: 0px;
 margin-bottom: 0px;
 }
+.header {
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(0, 219, 255, 1) 0%, rgba(2, 200, 246, 1) 100%);
+    color: #fff;
+    justify-content: center;
+    display: flex;
+}

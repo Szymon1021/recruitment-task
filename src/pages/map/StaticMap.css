@@ -24,3 +24,9 @@
   z-index: 1200;
 }
 
+.button-close {
+    position: absolute;
+     
+      right: 150px;
+      padding: 5px 7px;
+}

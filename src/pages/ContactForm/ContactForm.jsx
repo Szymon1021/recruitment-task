@@ -218,14 +218,11 @@ export default function ContactForm() {
     setUserMap(user);
   };
 
-  const handleMapButtonClose = e => {
-    if (e.target === e.currentTarget) {
-      setMap(false);
-    }
+  const handleMapButtonClose = () => {
+    setMap(false);
   };
   const handleClButtonClose = () => {
     setCl(false);
-    console.log(map);
   };
 
   useEffect(() => {
@@ -243,10 +240,15 @@ export default function ContactForm() {
     }
   };
 
+  const deleteFunction = id => {
+    const newFilteredContacts = user.filter(contact => contact.id !== id);
+    setUser(newFilteredContacts);
+  };
+
   return (
     <div className="container-contactform">
       <div className="main">
-        <div>
+        <div className="open-modal">
           <button
             style={{ height: 50 }}
             title="open Map"
@@ -259,7 +261,7 @@ export default function ContactForm() {
             title="open Cl"
             onClick={() => handleClButton({ userMap })}
           >
-            <span class="button-content">ContactList </span>
+            <span class="button-content">List</span>
           </button>
         </div>
         <Form
@@ -298,6 +300,7 @@ export default function ContactForm() {
           user={user}
           handleKeyPress={handleKeyPress}
           handleClButtonClose={handleClButtonClose}
+          deleteFunction={deleteFunction}
         />
       )}
     </div>

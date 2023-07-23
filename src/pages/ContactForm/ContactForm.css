@@ -61,4 +61,8 @@
     -webkit-transition: all 0.475s;
     transition: all 0.475s;
 }
-
+.open-modal {
+    gap: 5px;
+    display: flex;
+    justify-content: flex-start;
+}

@@ -33,3 +33,10 @@
         max-width: 600px;
         min-width: 300px;
 }
+.close {
+    position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 7px;
+        
+}
