@@ -115,7 +115,6 @@ export default function ContactForm() {
           if (data[0].value !== '') {
             setUl(data);
           } else {
-            
             setUl('');
             alert(`This ${valueCity} has not street in the data `);
           }
@@ -153,26 +152,12 @@ export default function ContactForm() {
 
   useEffect(() => {
     try {
-      if (valueWoj && valuePow && valueGmina && valueCity && valueUl && valueKod && valueNr !== '') {
+      if (valueWoj && valuePow && valueGmina && valueCity !== '') {
         api
-          .fetchCoordinate(
-            valueWoj,
-            valuePow,
-            valueGmina,
-            valueCity,
-            valueUl,
-            valueKod,
-            valueNr
-          )
+          .fetchCoordinate(valueWoj, valuePow, valueGmina, valueCity)
           .then(data => {
             setLatLng(data.reverse());
           });
-      } else if (valueUl && valueKod && valueNr === '') {
-         api
-           .fetchCoordinate(valueWoj, valuePow, valueGmina, valueCity)
-           .then(data => {
-             setLatLng(data.reverse());
-           });
       }
     } catch (error) {}
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod, valueNr]);
