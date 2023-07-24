@@ -28,6 +28,8 @@
     text-align: center;
 
     text-decoration-color: #fff;
+    inset-inline-start: 0px;
+    inset-inline-end: 0px;
 
 
 }
@@ -85,9 +87,5 @@
 
 .menu {
     inset-inline-start: 0px;
-        inset-inline-end: 0px;
+    inset-inline-end: 0px;
 }
-
-
-
-

@@ -25,6 +25,10 @@ export default function Form({
   nr,
   handleSelectNr,
 }) {
+  const handleClear = e => {
+    e.preventDefault();
+  };
+
   return (
     <div className="box">
       <form
@@ -73,16 +77,21 @@ export default function Form({
           value={email}
         />
         <label>Adres: </label>
+
         <AutoComplete
-          popupClassName="menu"
+          bordered={false}
+          style={{ width: 160 }}
+          onClear={() => handleClear}
           options={woj}
           filterOption={true}
           onChange={handleSelect}
           autoFocus={true}
           placeholder="Wojewodztwo"
         />
+
         {pow.length > 0 && (
           <AutoComplete
+            bordered={false}
             style={{ width: '100%' }}
             options={pow}
             filterOption={true}
@@ -94,6 +103,7 @@ export default function Form({
 
         {gmina.length > 0 && (
           <AutoComplete
+            bordered={false}
             options={gmina}
             filterOption={true}
             onChange={handleSelectGmina}
@@ -104,6 +114,7 @@ export default function Form({
 
         {city.length > 0 && (
           <AutoComplete
+            bordered={false}
             options={city}
             filterOption={true}
             onChange={handleSelectCity}
@@ -114,6 +125,7 @@ export default function Form({
 
         {ul.length > 0 && (
           <AutoComplete
+            bordered={false}
             options={ul}
             filterOption={true}
             onChange={handleSelectUl}
@@ -124,6 +136,7 @@ export default function Form({
 
         {kod.length > 0 && (
           <AutoComplete
+            bordered={false}
             options={kod}
             filterOption={true}
             onChange={handleSelectKod}
@@ -134,6 +147,7 @@ export default function Form({
 
         {nr.length > 0 && (
           <AutoComplete
+            bordered={false}
             placeholder="nr"
             options={nr}
             filterOption={true}
