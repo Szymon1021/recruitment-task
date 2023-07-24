@@ -115,7 +115,7 @@ export default function ContactForm() {
           if (data[0].value !== '') {
             setUl(data);
           } else {
-            console.log('Brak danych ulic');
+            
             setUl('');
             alert(`This ${valueCity} has not street in the data `);
           }
@@ -153,15 +153,35 @@ export default function ContactForm() {
 
   useEffect(() => {
     try {
-      if (valueWoj && valuePow && valueGmina && valueCity !== '') {
+      if (valueWoj && valuePow && valueGmina && valueCity && valueUl && valueKod && valueNr !== '') {
         api
-          .fetchCoordinate(valueWoj, valuePow, valueGmina, valueCity)
+          .fetchCoordinate(
+            valueWoj,
+            valuePow,
+            valueGmina,
+            valueCity,
+            valueUl,
+            valueKod,
+            valueNr
+          )
           .then(data => {
             setLatLng(data.reverse());
           });
+      } else if (valueUl && valueKod && valueNr === '') {
+         api
+           .fetchCoordinate(valueWoj, valuePow, valueGmina, valueCity)
+           .then(data => {
+             setLatLng(data.reverse());
+           });
       }
     } catch (error) {}
   }, [valueWoj, valuePow, valueGmina, valueCity, valueUl, valueKod, valueNr]);
+
+  useEffect(() => {
+    try {
+      window.addEventListener('keydown', handleKeyPress);
+    } catch (error) {}
+  }, []);
   /* handleSelect */
 
   const handleSelect = woj => {
@@ -225,18 +245,10 @@ export default function ContactForm() {
     setCl(false);
   };
 
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyPress);
-  }, []);
-
   const handleKeyPress = event => {
     if (event.key === 'Escape') {
       setMap(false);
       setCl(false);
-      console.log('nie ma modalu ');
-      console.log(map);
-    } else {
-      console.log('nie działa');
     }
   };
 

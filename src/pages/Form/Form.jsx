@@ -23,9 +23,6 @@ export default function Form({
   handleSelectKod,
   nr,
   handleSelectNr,
-  handleMapButton,
-  userMap,
-  handleClButton,
 }) {
   return (
     <div className="box">
@@ -146,7 +143,7 @@ export default function Form({
 
         <div>
           <button type="submit">
-            <span class="button-content">Register </span>
+            <span className="button-content">Register </span>
           </button>
         </div>
       </form>
