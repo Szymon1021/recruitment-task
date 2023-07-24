@@ -6,12 +6,12 @@
     display: flex;
     justify-content: center;
     height: 600px;
-    width: 40%;
+    width: 400px;
     box-shadow: 5px 5px 5px 5px rgb(207, 207, 207);
     padding-top: 30px;
     border-radius: 60px;
     background-color: white;
-    margin-left: 365px;
+    
    margin-top: 20px;
     
 }
@@ -82,9 +82,12 @@
     transition: all 0.475s;
 }
 
-:where(.css-dev-only-do-not-override-1sn0ohr).ant-select-single .ant-select-selector .ant-select-selection-search {
+
+.menu {
     inset-inline-start: 0px;
-    inset-inline-end: 0px;
+        inset-inline-end: 0px;
 }
+
+
 
 
