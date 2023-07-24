@@ -1,6 +1,9 @@
 import React from 'react';
 import { AutoComplete } from 'antd';
 import './Form.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Form({
   handleSubmit,
   handleChangeName,
@@ -24,8 +27,11 @@ export default function Form({
   nr,
   handleSelectNr,
 }) {
+  const notify = () => toast('User is register!');
+
   return (
     <div className="box">
+      <ToastContainer />
       <form
         onSubmit={handleSubmit}
         autocomplete="off"
@@ -142,7 +148,7 @@ export default function Form({
         )}
 
         <div>
-          <button type="submit">
+          <button type="submit" onClick={notify}>
             <span className="button-content">Register </span>
           </button>
         </div>
