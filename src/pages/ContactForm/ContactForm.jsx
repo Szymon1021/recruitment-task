@@ -192,6 +192,7 @@ export default function ContactForm() {
     setValueNr(nr);
   };
   const handleSubmit = evt => {
+    alert(`User ${name} ${lastname} is register `);
     evt.preventDefault();
     const form = evt.currentTarget;
     const newUser = {
